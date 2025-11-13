@@ -16,14 +16,13 @@ module --quiet purge 		#this resets the module environment, always good to start
 #Usually you load a number of modules below
 #module load <module name>	#this loads a specific "module" allowing you to run programs installed on the cluster
 
-##ACCEPT argument 
+##ACCEPT argument
 FILENAME=$1
 
-module load BIOS-IN5410/HT-2023 
+module load BIOS-IN5410/HT-2023
 
-##create a gvcf.list 
-ls *gvcf.gz > gvcf.list  # This creates a text file with all the HaplotypeCalled.gvcf.gz 
-filenames. 
+##create a gvcf.list
+ls *gvcf.gz > gvcf.list  # This creates a text file with all the HaplotypeCalled.gvcf.gz filenames.
 
 ##force create and remove an empty directory (needed to prevent errors when rerunning) 
 mkdir -p ${FILENAME}_DB; rm -r ${FILENAME}_DB
@@ -31,7 +30,7 @@ mkdir -p ${FILENAME}_DB; rm -r ${FILENAME}_DB
 ##run GATK database import (2nd step)
 gatk GenomicsDBImport -V gvcf.list \
 --genomicsdb-workspace-path ${FILENAME}_DB \
---intervals NC_004029.2 
+--intervals NC_004029.2
 
 ##run GATK genotype GVCF (3rd step)
 gatk GenotypeGVCFs -R ../Orosv1mt.fasta \
